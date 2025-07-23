@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Computer Class Reservation Form</title>
+  </head>
+  <body bgcolor="antiquewhite">
+    <h2>Computer Online Class Reservation Form</h2>
+    <h4>"The great aim of education is not knowledge, but action"</h4>
+    <hr size="1" width="100%" />
+
+    <font size="5" face="Bell MT">
+      <form>
+        <pre>
+<label for="name">Full Name:</label> 
+<input type="text" id="name" name="name" maxlength="30" size="30" required placeholder="Enter your name" />
+
+<label for="email">Email Address:     </label> 
+<input type="email" id="email" name="email" maxlength="30" size="30" required placeholder="Enter your e-mail address" />
+
+<label for="address">Address:          </label> 
+<input type="text" id="address" name="address" maxlength="50" size="50" required placeholder="Enter your home address" />
+
+<label for="mobile">Phone Number:     </label> 
+<input type="tel" id="mobile" name="mobile" required inputmode="numeric" maxlength="10" placeholder="Enter 10-digit phone no." />
+
+<label for="gender">Gender:   </label> 
+<input type="radio" id="male" name="gender" value="Male" required>Male <input type="radio" id="female" name="gender" value="Female">Female <input type="radio" id="other" name="gender" value="Other">Other
+
+<label for="course">Select Course:     </label> <select id="course" name="course" required>
+  <option value="">-- Choose a course --</option>
+  <option value="web">Web Development</option>
+  <option value="python">Python Programming</option>
+  <option value="graphic">Graphic Design</option>
+  <option value="data">Data Science</option>
+</select>
+
+<label for="schedule">Preferred Schedule:</label> <select id="schedule" name="schedule" required>
+  <option value="">-- Select a time slot --</option>
+  <option value="morning">Morning (10 AM - 12 PM)</option>
+  <option value="afternoon">Afternoon (1 PM - 3 PM)</option>
+  <option value="evening">Evening (6 PM - 8 PM)</option>
+</select>
+
+<input type="reset" value="Reset Form" />    <input type="submit" value="Reserve Now" />
+      </pre>
+      </form>
+    </font>
+  </body>
+</html>
