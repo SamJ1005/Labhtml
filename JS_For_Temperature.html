@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convert Temperature with JS</title>
+    <style>
+      body {
+        background-color: #ebc87d;
+        font-family: rockwell;
+        font-size: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+        font-family: consolas;
+      }
+
+      input,
+      select {
+        font-family: lucida sans typewriter;
+        font-size: 17px;
+      }
+
+      button {
+        font-family: ms reference sans serif;
+        font-size: 17px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>JAVA SCRIPT TO CONVERT TEMPERATURE TO AND FROM CELSIUS, FAHRENHEIT</h2>
+    <input type="number" id="temperature" placeholder="Enter temperature" />
+    <select id="unit-select">
+      <option value="celsius">Celsius</option>
+      <option value="fahrenheit">Fahrenheit</option>
+    </select>
+    <button onclick="convertTemperature()">Convert Temperature</button>
+    <p id="result"></p>
+
+    <script>
+      function convertTemperature() {
+        var temperature = parseFloat(
+          document.getElementById("temperature").value
+        );
+        if (isNaN(temperature)) {
+          document.getElementById("result").innerHTML =
+            "Invalid input. Please enter a valid number.";
+          return;
+        }
+        var unit = document.getElementById("unit-select").value;
+        if (unit === "celsius") {
+          var result = (temperature * 9) / 5 + 32;
+          document.getElementById("result").innerHTML = result + "°F";
+        } else if (unit === "fahrenheit") {
+          var result = ((temperature - 32) * 5) / 9;
+          document.getElementById("result").innerHTML = result + "°C";
+        }
+      }
+    </script>
+  </body>
+</html>
