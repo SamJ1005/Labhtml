@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leap Year</title>
+  </head>
+  <body>
+    <h2>Java Script program to find the given year is Leap Year</h2>
+    <label>Enter a year: </label>
+    <input type="number" id="yearIn" />
+    <button onclick="checkLeapYear()">Check</button>
+    <p id="result"></p>
+
+    <script>
+      function checkLeapYear() {
+        const year = parseInt(document.getElementById("yearIn").value);
+        let message = "";
+
+        if (isNaN(year)) {
+          message = "Invalid input. Please enter a valid number.";
+        } else {
+          if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+            message = "YES it is a Leap Year.";
+          } else {
+            message = "No, it is NOT a Leap Year.";
+          }
+        }
+        document.getElementById("result").innerText = message;
+      }
+    </script>
+  </body>
+</html>
