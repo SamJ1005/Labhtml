@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Variables and Data Types</title>
+</head>
+<body>
+
+    <h1>JavaScript Variables and Operators</h1>
+    <p id="output"></p>
+
+    <script>
+        // 1. Variables and Data Types
+        let name = "Jone" ; // String
+        let age = 34 ; // Number
+        let isemployee = true ; // Boolean
+        let salary = 12000.00 ; //Float
+        const country = "India"; // Constant variable
+
+        // 2. Operators and Statements
+        let outputText = name + " is " + age + " years old.";
+        
+        if (isemployee) {
+            outputText += " He is an employee and his salary is "+salary;
+        }
+        
+        // Displaying the result in the HTML
+        document.getElementById("output").innerHTML = outputText + ". He lives in " + country;
+    </script>
+
+</body>
+</html>
