@@ -26,18 +26,20 @@
         table-layout: fixed;
         align-items: center;
         border-spacing: 10px;
-        margin: 50px auto;
+        margin: 20px auto;
         margin-top: 20px;
-        width: 80%;
+        width: 100%;
+        max-width: 900px;
       }
 
       td {
-        height: 60px;
-        width: 300px;
+        font-size: x-large;
+        min-width: 100px;
         text-align: center;
         border-radius: 4%;
         padding: 20px;
         background-color: #ff1493;
+        overflow-wrap: break-word;
       }
 
       h1 {
@@ -48,16 +50,28 @@
 
       a {
         text-decoration: none;
-        font-size: 35px;
+        font-size: 1.3rem;
         color: white;
         text-align: center;
-        font-family: sogie ui;
+        font-family: "Segoe UI", sans-serif;
+        display: block;
+        word-wrap: break-word;
+      }
+
+      @media (max-width: 600px) {
+        a {
+          font-size: 1rem;
+        }
+
+        td {
+          padding: 12px;
+        }
       }
     </style>
   </head>
   <body>
     <h1>LAB WORKS</h1>
-    <div class="container">
+    <div class="container" style="overflow-x: auto">
       <table>
         <tr>
           <td>

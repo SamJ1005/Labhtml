@@ -2,6 +2,20 @@
 <html>
   <head>
     <title>Computer Class Reservation Form</title>
+    <script>
+      function validateform() {
+        let sname = document.getElementById("name").value;
+        let password = document.getElementById("pass").value;
+
+        let namePattern = /^[A-Za-z]+$/;
+        if (!namePattern.test(sname)||sname.length<6){
+          alert("");
+          return
+        }else {
+          return;
+        }
+      }
+    </script>
   </head>
   <body bgcolor="antiquewhite">
     <h2>Computer Online Class Reservation Form</h2>
