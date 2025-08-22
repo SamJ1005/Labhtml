@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM and Events</title>
+</head>
+<body>
+
+    <h1>DOM Manipulation with Events</h1>
+    <p id="message">This is the original message.</p>
+    <button id="changeTextBtn">Click Me to Change Text</button>
+
+    <script>
+        // 1. The Document Object Model (DOM)
+        // Select elements from the DOM
+        const messageElement = document.getElementById("message");
+        const changeButton = document.getElementById("changeTextBtn");
+
+        // 2. JavaScript Events
+        // Add a click event listener to the button
+        changeButton.addEventListener("click", function() {
+            // Change the content of the paragraph element
+            messageElement.textContent = "The text was changed by a button click!";
+            messageElement.style.color = "blue";
+            messageElement.style.fontWeight = "bold";
+        });
+    </script>
+
+</body>
+</html>
