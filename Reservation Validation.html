@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Form</title>
+</head>
+<body>
+    <form onsubmit="return validateForm()">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        function validateForm() {
+            // Get form values
+            const firstName = document.getElementById('firstName').value;
+            const password = document.getElementById('password').value;
+
+            // Validate First Name
+            const namePattern = /^[A-Za-z]+$/; // Only alphabets allowed
+            if (firstName.length < 6 || !namePattern.test(firstName)) {
+                alert("First Name should contain only alphabets and must be at least 6 characters long.");
+                return false;
+            }
+
+            // Validate Password
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters long.");
+                return false;
+            }
+
+            // If all validations pass
+            alert("Form submitted successfully!");
+            return true;
+        }
+    </script>
+</body>
+</html>
