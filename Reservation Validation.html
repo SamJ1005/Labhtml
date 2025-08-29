@@ -17,24 +17,20 @@
     </form>
     <script>
         function validateForm() {
-            // Get form values
             const firstName = document.getElementById('firstName').value;
             const password = document.getElementById('password').value;
 
-            // Validate First Name
-            const namePattern = /^[A-Za-z]+$/; // Only alphabets allowed
+            const namePattern = /^[A-Za-z]+$/;
             if (firstName.length < 6 || !namePattern.test(firstName)) {
                 alert("First Name should contain only alphabets and must be at least 6 characters long.");
                 return false;
             }
 
-            // Validate Password
             if (password.length < 6) {
                 alert("Password must be at least 6 characters long.");
                 return false;
             }
 
-            // If all validations pass
             alert("Form submitted successfully!");
             return true;
         }
