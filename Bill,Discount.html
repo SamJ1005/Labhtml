@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bill & Discount Calculator</title>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      function App() {
+        const [items, setItems] = React.useState([]);
+        const [itemName, setItemName] = React.useState("");
+        const [price, setPrice] = React.useState("");
+        const [qty, setQty] = React.useState("");
+        const [discount, setDiscount] = React.useState("");
+        const [preview, setPreview] = React.useState(false);
+
+        const billNo = React.useMemo(
+          () => Math.floor(10000 + Math.random() * 90000),
+          []
+        );
+        const [dateTime, setDateTime] = React.useState(
+          new Date().toLocaleString()
+        );
+
+        React.useEffect(() => {
+          const timer = setInterval(
+            () => setDateTime(new Date().toLocaleString()),
+            1000
+          );
+          return () => clearInterval(timer);
+        }, []);
+
+        const blockInvalidChar = (e) => {
+          if (["e", "E", "+", "-"].includes(e.key)) e.preventDefault();
+        };
+
+        const addItem = () => {
+          if (!itemName.trim() || price === "" || qty === "") return;
+          const p = parseFloat(price) || 0;
+          const q = parseInt(qty) || 0;
+
+          const idx = items.findIndex(
+            (it) =>
+              it.name.toLowerCase() === itemName.trim().toLowerCase() &&
+              it.price === p &&
+              it.qty === q
+          );
+
+          if (idx >= 0) {
+            const updated = [...items];
+            updated[idx].qty += q;
+            setItems(updated);
+          } else {
+            setItems((prev) => [
+              ...prev,
+              { id: Date.now(), name: itemName.trim(), price: p, qty: q },
+            ]);
+          }
+
+          setItemName("");
+          setPrice("");
+          setQty("");
+        };
+
+        const removeItem = (id) =>
+          setItems((prev) => prev.filter((it) => it.id !== id));
+        const copyItem = (item) => {
+          setItemName(item.name);
+          setPrice(item.price);
+          setQty(item.qty);
+        };
+
+        const subtotal = items.reduce(
+          (acc, it) => acc + Number(it.price) * Number(it.qty),
+          0
+        );
+        const discountValue = discount
+          ? (subtotal * (parseFloat(discount) || 0)) / 100
+          : 0;
+        const total = subtotal - discountValue;
+
+        const totalItems = items.length;
+        const totalQty = items.reduce((acc, it) => acc + Number(it.qty), 0);
+
+        // PREVIEW (Final Bill)
+        if (preview) {
+          return (
+            <div className="container">
+              <h1>🧾 Final Bill</h1>
+              <div className="bill-header">
+                <p>
+                  <strong>Bill No:</strong> {billNo}
+                </p>
+                <p>
+                  <strong>Date & Time:</strong> {dateTime}
+                </p>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>S. No.</th>
+                    <th>Item</th>
+                    <th>Price / pcs (₹)</th>
+                    <th>Qty</th>
+                    <th>Total (₹)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.length > 0 ? (
+                    items.map((it, index) => (
+                      <tr key={it.id}>
+                        <td>{index + 1}</td>
+                        <td>{it.name}</td>
+                        <td>{Number(it.price).toFixed(2)}</td>
+                        <td>{it.qty}</td>
+                        <td>{(it.price * it.qty).toFixed(2)}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="no-items">
+                        No items added
+                      </td>
+                    </tr>
+                  )}
+
+                  <tr className="totals-row">
+                    <td colSpan="4" className="totals-label">
+                      No. of Items
+                    </td>
+                    <td>{totalItems}</td>
+                  </tr>
+                  <tr className="totals-row">
+                    <td colSpan="4" className="totals-label">
+                      Total Quantity
+                    </td>
+                    <td>{totalQty}</td>
+                  </tr>
+                  <tr className="totals-row">
+                    <td colSpan="4" className="totals-label">
+                      Subtotal (₹)
+                    </td>
+                    <td>{subtotal.toFixed(2)}</td>
+                  </tr>
+                  <tr className="totals-row">
+                    <td colSpan="4" className="totals-label">
+                      Discount ({discount || 0}%)
+                    </td>
+                    <td>{discountValue.toFixed(2)}</td>
+                  </tr>
+                  <tr className="totals-row">
+                    <td colSpan="4" className="totals-label">
+                      Final Total (₹)
+                    </td>
+                    <td>{total.toFixed(2)}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div className="actions">
+                <button className="btn-back" onClick={() => setPreview(false)}>
+                  ⬅ Back
+                </button>
+                <button
+                  className="btn-print"
+                  onClick={() => {
+                    alert("Bill Printed Successfully!");
+                    setItems([]);
+                    setDiscount("");
+                    setPreview(false);
+                  }}
+                >
+                  Print Bill
+                </button>
+              </div>
+            </div>
+          );
+        }
+
+        // MAIN ENTRY VIEW
+        return (
+          <div className="container">
+            <h1>🧾 Bill & Discount Calculator</h1>
+            <div className="bill-header">
+              <p>
+                <strong>Bill No:</strong> {billNo}
+              </p>
+              <p>
+                <strong>Date & Time:</strong> {dateTime}
+              </p>
+            </div>
+
+            {/* Inputs */}
+            <div className="input-row">
+              <input
+                type="text"
+                placeholder="Item Name"
+                value={itemName}
+                onChange={(e) => setItemName(e.target.value)}
+              />
+              <input
+                type="number"
+                placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                onKeyDown={blockInvalidChar}
+              />
+              <input
+                type="number"
+                placeholder="Qty"
+                value={qty}
+                onChange={(e) => setQty(e.target.value)}
+                onKeyDown={blockInvalidChar}
+              />
+            </div>
+
+            <div className="center-actions">
+              <button className="btn-primary" onClick={addItem}>
+                Add Item
+              </button>
+            </div>
+
+            {/* Table */}
+            <table>
+              <thead>
+                <tr>
+                  <th>S. No.</th>
+                  <th>Item</th>
+                  <th>Price / pcs (₹)</th>
+                  <th>Qty</th>
+                  <th>Total (₹)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.length > 0 ? (
+                  items.map((it, index) => (
+                    <tr key={it.id}>
+                      <td>{index + 1}</td>
+                      <td>{it.name}</td>
+                      <td>{Number(it.price).toFixed(2)}</td>
+                      <td>{it.qty}</td>
+                      <td>{(it.price * it.qty).toFixed(2)}</td>
+                      <td>
+                        <button
+                          className="btn-copy"
+                          onClick={() => copyItem(it)}
+                        >
+                          Copy
+                        </button>{" "}
+                        <button
+                          className="btn-remove"
+                          onClick={() => removeItem(it.id)}
+                        >
+                          -
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="no-items">
+                      No items added
+                    </td>
+                  </tr>
+                )}
+
+                {/* Discount input */}
+                <tr>
+                  <td
+                    colSpan="6"
+                    style={{ textAlign: "right", paddingRight: "16px" }}
+                  >
+                    <input
+                      type="number"
+                      placeholder="Discount %"
+                      value={discount}
+                      onChange={(e) => setDiscount(e.target.value)}
+                      onKeyDown={blockInvalidChar}
+                      style={{ width: "140px" }}
+                    />
+                  </td>
+                </tr>
+
+                {/* Totals */}
+                <tr className="totals-row">
+                  <td colSpan="5" className="totals-label">
+                    No. of Items
+                  </td>
+                  <td>{totalItems}</td>
+                </tr>
+                <tr className="totals-row">
+                  <td colSpan="5" className="totals-label">
+                    Total Quantity
+                  </td>
+                  <td>{totalQty}</td>
+                </tr>
+                <tr className="totals-row">
+                  <td colSpan="5" className="totals-label">
+                    Subtotal (₹)
+                  </td>
+                  <td>{subtotal.toFixed(2)}</td>
+                </tr>
+                <tr className="totals-row">
+                  <td colSpan="5" className="totals-label">
+                    Discount (₹)
+                  </td>
+                  <td>{discountValue.toFixed(2)}</td>
+                </tr>
+                <tr className="totals-row">
+                  <td colSpan="5" className="totals-label">
+                    Final Total (₹)
+                  </td>
+                  <td>{total.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div className="actions">
+              <button
+                className="btn-clear"
+                onClick={() => {
+                  setItems([]);
+                  setDiscount("");
+                }}
+              >
+                Clear Bill
+              </button>
+              <button className="btn-primary" onClick={() => setPreview(true)}>
+                Preview
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
