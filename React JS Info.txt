@@ -1,0 +1,27 @@
+for react js first download node js and then setup
+node -v
+npm -v
+npx -v
+(if it works)
+
+(the correct folder for react. In the terminal)
+npx create-react-app my-app
+
+npm start
+    Starts the development server.
+
+  npm run build
+    Bundles the app into static files for production.
+
+  npm test
+    Starts the test runner.
+
+  npm run eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+
+We suggest that you begin by typing:
+
+  cd my-app
+  npm start
