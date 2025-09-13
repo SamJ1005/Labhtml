@@ -4,6 +4,8 @@ npm -v
 npx -v
 (if it works)
 
+npm install -g create-react-app
+
 (the correct folder for react. In the terminal)
 npx create-react-app my-app
 
