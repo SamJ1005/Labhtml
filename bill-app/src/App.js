@@ -1,50 +1,73 @@
-import React, { useState } from "react";
-import ItemForm from "./components/ItemForm";
-import ItemList from "./components/ItemList";
-import Totals from "./components/Total";
+import React, {
+  useState
+} from "react";
 import "./App.css";
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [discount, setDiscount] = useState(0);
+  const [amount, setAmount] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [total, setTotal] = useState(null);
 
-  // Add new item
-  const addItem = (item) => {
-    setItems([...items, { ...item, id: Date.now() }]);
+  const calculateTotal = () => {
+    const amt = parseFloat(amount);
+    const dis = parseFloat(discount);
+
+    if (isNaN(amt) || isNaN(dis)) {
+      alert("Please enter valid numbers!");
+      return;
+    }
+
+    const discountValue = (amt * dis) / 100;
+    const finalAmount = amt - discountValue;
+
+    setTotal(finalAmount.toFixed(2));
   };
 
-  // Remove item
-  const removeItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
+  return React.createElement(
+    "div", {
+      className: "container",
+    },
+    [
+      React.createElement(
+        "h1", {
+          key: "title",
+        },
+        "📃 Bill Discount Calculator"
+      ),
 
-  // Calculate totals
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const discountAmount = (subtotal * discount) / 100;
-  const total = subtotal - discountAmount;
+      React.createElement("input", {
+        key: "amount",
+        type: "number",
+        placeholder: "Enter Amount",
+        value: amount,
+        onChange: (e) => setAmount(e.target.value),
+      }),
 
-  return (
-    <div className="app">
-      <h1>🧾 Bill & Discount Calculator</h1>
+      React.createElement("input", {
+        key: "discount",
+        type: "number",
+        placeholder: "Enter Discount %",
+        value: discount,
+        onChange: (e) => setDiscount(e.target.value),
+      }),
 
-      {/* Item Form */}
-      <ItemForm addItem={addItem} />
+      React.createElement(
+        "button", {
+          key: "button",
+          onClick: calculateTotal,
+        },
+        "Calculate"
+      ),
 
-      {/* Item List */}
-      <ItemList items={items} removeItem={removeItem} />
-
-      {/* Discount & Totals */}
-      <Totals
-        subtotal={subtotal}
-        discount={discount}
-        setDiscount={setDiscount}
-        discountAmount={discountAmount}
-        total={total}
-      />
-    </div>
+      total !== null &&
+      React.createElement(
+        "h2", {
+          key: "result",
+          className: "result",
+        },
+        `✅ Total After Discount: ₹${total}`
+      ),
+    ]
   );
 }
 
