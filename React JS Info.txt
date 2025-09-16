@@ -4,9 +4,11 @@ npm -v
 npx -v
 (if it works)
 
-npm install -g create-react-app
+In the powershell, give the permissions(Open run as administrator) :
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 (the correct folder for react. In the terminal)
+npm install -g create-react-app
 npx create-react-app my-app
 
 npm start
